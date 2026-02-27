@@ -15,8 +15,6 @@ function Login() {
 
   const getHospitals = async () => {
     const res = await fetchHospitals(phone);
-    console.log(res);
-    
     setHospitals(res.Hospital);
   };
 
@@ -90,7 +88,7 @@ function Login() {
                   onClick={getHospitals}
                   className="w-full bg-purple-600 text-white p-2 rounded mb-4"
                 >
-                  Get Hospitals
+                  Fetch Hospitals
                 </button>
 
                 <select
