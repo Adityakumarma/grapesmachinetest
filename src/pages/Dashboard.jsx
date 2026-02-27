@@ -4,7 +4,7 @@ import OverviewStats from "../components/OverviewStats";
 import SummaryCards from "../components/SummaryCards";
 import DoctorInfo from "../components/DoctorInfo";
 import CalendarMeetings from "../components/CalendarMeetings";
-import { FaBars, FaSignOutAlt } from "react-icons/fa";
+import {  FaSignOutAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
