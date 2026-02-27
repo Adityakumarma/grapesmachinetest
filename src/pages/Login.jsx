@@ -13,7 +13,8 @@ function Login() {
 
   const navigate = useNavigate();
 
-  const getHospitals = async () => {
+  const getHospitals = async (e) => {
+     e.preventDefault();  
     const res = await fetchHospitals(phone);
     setHospitals(res.Hospital);
   };
@@ -97,9 +98,9 @@ function Login() {
                 >
                   <option>Select Hospital</option>
 
-                  {hospitals.map((h) => (
-                    <option key={h.hospital_id} value={h.hospital_id}>
-                      {h.hospital_name}
+                  {hospitals?.map((hosp) => (
+                    <option key={hosp.hospital_id} value={hosp.hospital_id}>
+                      {hosp.hospital_name}
                     </option>
                   ))}
                 </select>
