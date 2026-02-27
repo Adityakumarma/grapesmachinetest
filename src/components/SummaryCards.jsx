@@ -13,7 +13,7 @@ function SummaryCards() {
       {data.map((d, i) => (
         <div key={i} className="bg-white p-5 rounded shadow">
 
-          <h3 className="text-gray-500 ">{d.title}</h3>
+          <h3 className="text-gray-600 ">{d.title}</h3>
           <p className="text-2xl font-bold text-purple-600">{d.value}</p>
 
         </div>

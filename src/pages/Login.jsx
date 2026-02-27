@@ -14,22 +14,59 @@ function Login() {
   const navigate = useNavigate();
 
   const getHospitals = async (e) => {
-     e.preventDefault();  
-    const res = await fetchHospitals(phone);
-    setHospitals(res.Hospital);
+    e.preventDefault();
+
+    if (!phone) {
+      alert("Please enter phone number");
+      return;
+    }
+
+    try {
+      const res = await fetchHospitals(phone);
+      if (!res) {
+        alert("Server not responding");
+        return;
+      }
+      if (res.Hospital && res.Hospital.length > 0) {
+        alert("Select hospital");
+        setHospitals(res.Hospital);
+      } else {
+        alert("No hospitals found for this number");
+      }
+
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong");
+    }
   };
 
   const handleLogin = async () => {
 
-    const res = await loginUser({
-      PhoneNumber: phone,
-      HospitalID: hospitalId,
-      Password: password,
-    });
+    if (!phone || !hospitalId || !password) {
+      alert("Please fill all fields");
+      return;
+    }
 
-    localStorage.setItem("token", res.Token);
 
-    navigate("/dashboard");
+    try {
+      const res = await loginUser({
+        PhoneNumber: phone,
+        HospitalID: hospitalId,
+        Password: password,
+      });
+
+      if (!res || !res.Token) {
+        alert("Invalid login credentials");
+        return;
+      }
+      localStorage.setItem("token", res.Token);
+
+      navigate("/dashboard");
+
+    } catch (error) {
+      console.error(error);
+      alert("Login failed. Please try again.");
+    }
   };
 
   return (
@@ -79,7 +116,7 @@ function Login() {
                 <input
                   type="text"
                   value={phone}
-                  onChange={(e)=>setPhone(e.target.value)}
+                  onChange={(e) => setPhone(e.target.value)}
                   className="w-full bg-white text-black p-2 rounded mt-2 shadow"
                 />
               </div>
@@ -99,7 +136,7 @@ function Login() {
                   <option>Select Hospital</option>
 
                   {hospitals?.map((hosp) => (
-                    <option key={hosp.hospital_id} value={hosp.hospital_id}>
+                    <option className="text-black" key={hosp.hospital_id} value={hosp.hospital_id}>
                       {hosp.hospital_name}
                     </option>
                   ))}
@@ -110,7 +147,7 @@ function Login() {
                 <label>Password</label>
                 <input
                   type="password"
-                  onChange={(e)=>setPassword(e.target.value)}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="w-full bg-white text-black p-2 rounded mt-2 shadow"
                 />
               </div>
